@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <title>后台</title>
+    <!-- bootstrap/jquery -->
+    <link type="text/css" rel="stylesheet" href="./css/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap-theme.css">
+    <!-- 自定义css/js -->
+    <script type="text/javascript" src="./js/pro-city.js"></script>
+    <link type="text/css" rel="stylesheet" href="./css/style.css">
+    <script type="text/javascript" src="./js/utils.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <div class="wrapper">
+        <section class="sign-section">
+            <div class="container">
+                <div class="sign-content">
+                    <h2>
+                        <span>后台管理员登录</span>
+                    </h2>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="sign-content-form">
+                                <form action="login_M_deal.jsp" method="post">
+                                    <div class="form-group">
+                                        <label for="adminName">管理员名称</label>
+                                        <input name="adminName" class="form-control" type="text" id="adminName"
+                                            placeholder="账号名称" required="required">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="adminPasswd">密码</label>
+                                        <input name="adminPasswd" class="form-control" id="adminPasswd" type="password"
+                                            placeholder="管理员密码" required="required">
+                                    </div>
+                                    <div class="row">
+                                        <div class="sign-footer">
+                                            <input type="submit" class="btn sign-btn" value="确认">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>
