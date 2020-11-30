@@ -1,6 +1,8 @@
 #include "include/EvHttpServer.h"
 #include "include/EvHttpResp.h"
 #include "include/json.hpp"
+#include "include/userModel.hpp"
+#include "include/userDAO.hpp"
 #include <signal.h>
 #include <iostream>
 #include <functional>
@@ -19,6 +21,10 @@ void ResponseQuery(EvHttpResp *resp);
 void ResponseFile(EvHttpResp *resp, string filePath);
 //处理用户发送的信息
 void ResponseMsg(EvHttpResp *resp);
+//处理注册请求
+void ResponseRegiste(EvHttpResp *resp);
+//处理登录请求
+void ResponseLogin(EvHttpResp *resp);
 
 void SetContenType(string fileType, EvHttpResp *resp);
 
@@ -31,7 +37,7 @@ void http_gen_cb(EvHttpResp *resp)
     cout << "==================================================" << endl;
     cout << resp->GetRequestUri() << endl;
 
-    if(resp->GetRequestUri() == "/")
+    if (resp->GetRequestUri() == "/")
     {
         ResponseFile(resp, HOME);
     }
@@ -89,6 +95,33 @@ void ResponseLogin(EvHttpResp *resp)
     // ResponseFile(resp, filePath);
 }
 
+void ResponseRegiste(EvHttpResp *resp)
+{
+    const string paramNames[6] = {"userName", "userEmail", "userPhone", "passwd", "province", "city"};
+    const string resParamNames[8] = {"id", "uid", "userName", "userEmail", "userPhone", "passwd", "province", "city"};
+    string str_body = resp->GetPostMsg();
+    cout << "ResponseRegiste : " << str_body << endl;
+    map<string, string> regParams;
+    GetQueryParams(str_body, regParams);
+    json JregParams;
+    for (auto const &p : regParams)
+    {
+        JregParams[p.first] = p.second;
+    }
+
+    User u(JregParams);
+    userDAO ud;
+    cout << u.GetUserEmail() << endl;
+    ud.Insert(u);
+
+    json JrespData;
+    JrespData["Code"] = "REG_OK";
+    string respData = JsonToString(JrespData);
+    resp->AddRespBuf(respData.c_str(), respData.length());
+    resp->SetRespCode(200);
+    resp->SendResponse();
+}
+
 void ResponseMsg(EvHttpResp *resp)
 {
     string str_body = resp->GetPostMsg();
@@ -98,7 +131,7 @@ void ResponseMsg(EvHttpResp *resp)
     GetQueryParams(str_body, msgParams);
 
     json JmsgParams;
-    for(auto const& p:msgParams)
+    for (auto const &p : msgParams)
     {
         JmsgParams[p.first] = p.second;
     }
@@ -177,6 +210,7 @@ int main(int argc, char *args[])
     //默认绑定0.0.0.0:80, timeout = 5000
     EvHttpServer serv("0.0.0.0", 80);
 
+    serv.RegHandler("/web/reg", ResponseRegiste);
     serv.RegHandler("/web/login", ResponseLogin);
     serv.RegHandler("/web/recvMsg", ResponseMsg);
     serv.RegHandler(http_gen_cb);
