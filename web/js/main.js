@@ -129,8 +129,8 @@ $(document).ready(function () {
                     + '&province=' + province
                     + '&city=' + city,
                 dataType: 'json',
-                success: function (data) {
-                    console.log(data.Code);
+                success: function () {
+                    window.location.href = '/web/login.html';
                 },
                 error: function () {
                     alert("error...");
@@ -140,6 +140,27 @@ $(document).ready(function () {
             alert("请按正确格式填写信息");
         }
     });
+
+    /*      Login        */
+    // "id", "uid", "userName", "userEmail", "userPhone", "passwd", "province", "city"
+    $('#login-btn').on('click', function () {
+        var name = $('#email').val();
+        var passwd = $('#passwd').val();
+        var x = $.ajax({
+            url: '/web/login',
+            type: 'post',
+            data: 'userEmail=' + name + '&passwd=' + passwd,
+            dataType: 'json',
+            success: function (data) {
+                sessionStorage.setItem('userName', JSON.stringify(data.userName));
+                sessionStorage.setItem('userEmail', JSON.stringify(data.userEmail));
+                window.location.href = '/web/index.html';
+            },
+            error: function () {
+                alert("账号或密码错误，请重试");
+            }
+        });
+    })
 
 
     /*      辅助方法    */

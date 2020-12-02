@@ -16,6 +16,5 @@ function login() {
             {
                 alert("error...");
             }
-
         });
 }

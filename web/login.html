@@ -11,7 +11,8 @@
     <script type="text/javascript" src="./js/pro-city.js"></script>
     <link type="text/css" rel="stylesheet" href="./css/style.css">
     <script type="text/javascript" src="./js/utils.js"></script>
-    <script type="text/javascript" src="js/login.js"></script>
+    
+    <script type="text/javascript" src="./js/main.js"></script>
 </head>
 
 <body>
@@ -28,20 +29,19 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="sign-content-form">
-                                <form action="login_deal.jsp" method="post">
-                                    <div class="form-group">
-                                        <label for="email">邮箱账号</label>
-                                        <input name="userEmail" class="form-control" type="email" id="email"
-                                            placeholder="邮箱账号" required="required">
-                                    </div>
+                                <div class="form-group">
+                                    <label for="email">邮箱账号</label>
+                                    <input name="userEmail" class="form-control" type="email" id="email"
+                                        placeholder="邮箱账号" required="required">
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="passwd">密码</label>
-                                        <input name="userPasswd" class="form-control" id="passwd" type="password"
-                                            placeholder="请输入您的密码" required="required">
-                                    </div>
+                                <div class="form-group">
+                                    <label for="passwd">密码</label>
+                                    <input name="userPasswd" class="form-control" id="passwd" type="password"
+                                        placeholder="请输入您的密码" required="required">
+                                </div>
 
-                                    <!-- <div class="form-group">
+                                <!-- <div class="form-group">
                                         <input name="captcha" class="form-control captcha" id="captcha" type="text"
                                             placeholder="请输入左侧验证码" style="width: 60%; float: right">
                                         <img style="float: left" src="../captcha" name="checkCode" onClick="reload()"
@@ -52,41 +52,39 @@
                                                 document.getElementById("img_checkCode").src = document.getElementById("img_checkCode").src + "?nocache=" + new Date().getTime();
                                             }
                                         </script> -->
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="checkbox-list">
+                                        <ul class="unstyled centered">
+                                            <li>
+                                                <input class="styled-checkbox" name="autoLogin" id="autoLogin"
+                                                    type="checkbox" value="on">
+                                                <label for="autoLogin">自动登录</label>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="glyphicon glyphicon-hand-right"></i>找回密码</a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="checkbox-list">
-                                                <ul class="unstyled centered">
-                                                    <li>
-                                                        <input class="styled-checkbox" name="autoLogin" id="autoLogin"
-                                                            type="checkbox" value="on">
-                                                        <label for="autoLogin">自动登录</label>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#"><i
-                                                                class="glyphicon glyphicon-hand-right"></i>找回密码</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="sign-footer">
-                                            <input type="submit" class="btn sign-btn" value="登录">
-                                            <p>没有帐号？<a href="register.html">立即注册</a> </p>
-                                            <p>我是管理员?<a href="login_M.html">点这登录</a></p>
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="sign-footer">
+                                    <input id="login-btn" type="submit" class="btn sign-btn" value="登录">
+                                    <p>没有帐号？<a href="register.html">立即注册</a> </p>
+                                    <p>我是管理员?<a href="login_M.html">点这登录</a></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
+
+
+
             </div>
-        </section>
+    </div>
+    </section>
     </div>
 </body>
 

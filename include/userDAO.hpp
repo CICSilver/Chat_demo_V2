@@ -23,8 +23,6 @@ public:
     userDAO()
     {
         const std::string databasePath = "/home/ben/Chat_demo_V2/db/chat.db";
-        // sqlite3pp::database db_t(databasePath.c_str());
-        // db = &db_t;
         db = sqlite3pp::database(databasePath.c_str());
     };
     ~userDAO();
@@ -34,6 +32,7 @@ public:
     int Delete(User u);
     //查询所有用户信息
     std::vector<nlohmann::json> Select();
+    std::vector<nlohmann::json> Select(std::string userEmail);
 
 private:
     std::string getUID()
@@ -86,11 +85,8 @@ userDAO::~userDAO()
 int userDAO::Insert(User u)
 {
     std::string uid = getUID();
-    printf("111\n");
     std::string sql = "insert into " + tableName + " (uid,userName,userEmail,userPhone,passwd,province,city) values (?,?,?,?,?,?,?)";
-    printf("222\n");
     sqlite3pp::command cmd(db, sql.c_str());
-    printf("333\n");
     cmd.binder() << uid << u.GetUserName() << u.GetUserEmail() << u.GetUserPhone() << u.GetPasswd() << u.GetProvince() << u.GetCity();
     cmd.execute();
     std::cout << "insert done.." << std::endl;
@@ -123,12 +119,10 @@ std::vector<nlohmann::json> userDAO::Select()
     for (sqlite3pp::query::iterator i = qry.begin(); i != qry.end(); ++i)
     {
         //取出所有记录
-        std::cout << "a" << std::endl;
         nlohmann::json user_json;
         for (int j = 0; j < qry.column_count(); ++j)
         {
             //按列输出
-            std::cout << "b" << std::endl;
             user_json[text[j]] = (*i).get<char const *>(j);
         }
         result.emplace_back(user_json);
@@ -137,6 +131,27 @@ std::vector<nlohmann::json> userDAO::Select()
     std::cout << "select done.." << std::endl;
     return result;
     // TODO
+}
+
+std::vector<nlohmann::json> userDAO::Select(std::string userEmail)
+{
+    std::string sql = "select * from " + tableName +" where userEmail="+"'"+userEmail+"'";
+    sqlite3pp::query qry(db, sql.c_str());
+    std::vector<std::string> text = {"id", "uid", "userName", "userEmail", "userPhone", "passwd", "province", "city"};
+    for (sqlite3pp::query::iterator i = qry.begin(); i != qry.end(); ++i)
+    {
+        //取出所有记录
+        nlohmann::json user_json;
+        for (int j = 0; j < qry.column_count(); ++j)
+        {
+            //按列输出
+            user_json[text[j]] = (*i).get<char const *>(j);
+        }
+        result.emplace_back(user_json);
+    }
+
+    std::cout << "select done.." << std::endl;
+    return result;
 }
 
 #endif
